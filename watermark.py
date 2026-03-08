@@ -81,8 +81,12 @@ def add_watermark(directory, logo_path, position, new_directory, padding, scale)
 
                 # Determine the relative path
                 relative_path = os.path.relpath(dirpath, directory)
+                relative_path = os.path.relpath(dirpath, directory)
                 save_directory = new_directory if new_directory else directory
-                final_save_directory = os.path.join(save_directory, relative_path)
+                if relative_path == '.':
+                    final_save_directory = save_directory
+                else:
+                    final_save_directory = os.path.join(save_directory, relative_path)
 
                 # Ensure the new directory exists
                 if not os.path.exists(final_save_directory):
@@ -127,7 +131,7 @@ if __name__ == "__main__":
     parser.add_argument('--scale',
                         type=float, 
                         default=20,
-                        help="Resize the watermark based on a percentage of the image's width. E.g., for 10% of the image's width, provide 10.")
+                        help="Resize the watermark based on a percentage of the image's width. E.g., for 10%% of the image's width, provide 10.")
 
 
     args = parser.parse_args()
